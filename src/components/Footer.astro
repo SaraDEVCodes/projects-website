@@ -1,0 +1,57 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { captialise } from "../utils";
+
+const allProjects: CollectionEntry<'project'>[] = (await getCollection('project'))
+
+const tags: string[] = allProjects.flatMap((project: any) => project.data.tags);
+
+const uniqueTags: string[] = [...new Set(tags)];
+---
+
+<footer class="bg-gray-900 text-white">
+  <div class="container mx-auto mt-10 max-w-screen-xl px-8">
+    <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+      
+      <div class="mt-10">
+        <h3 class="text-xl font-semibold mb-4">About</h3>
+        <div class="space-y-4">
+          <p class="text-white text-sm">
+            Studio Grimoire is a studio for fantasy genre enthusiasts.
+          </p>
+          <p class="text-white text-sm">
+            We publish games, art and music exploring the fantasy genre in many creative fields.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-10">
+        <h3 class="text-xl font-semibold mb-4">Project tags</h3>
+        <ul class="text-white text-sm">
+          {uniqueTags.map(tag => (
+            <li class="mb-2">
+              <a href={'/projects/tag/' + tag}>{captialise(tag)}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="mt-10">
+        <h3 class="text-xl font-semibold mb-4">Contact</h3>
+        <ul class="text-white text-sm">
+          <li class="mb-2">
+            <a href="#">Email</a>
+          </li>
+          <li class="mb-2">
+            <a href="#">Linkedin</a>
+          </li>
+          <li class="mb-2">
+            <a href="#">Youtube</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</footer>

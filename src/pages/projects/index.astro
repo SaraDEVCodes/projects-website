@@ -1,0 +1,29 @@
+---
+import './src/styles/global.css'
+import MainLayout from "../../layouts/MainLayout.astro";
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const allProjects: CollectionEntry<'project'>[] = (await getCollection('project')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<MainLayout title = "Projects">
+	 <h1 class="text-2xl pb-3">All Projects</h1>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+       {allProjects.map(project => (
+
+        <ProjectCard project={project} />
+
+       ))}
+      </div>
+        <div class="flex justify-between mt-10">
+          <a href="#" class="inline-block bg-indigo-100 px-3 py-2 hover:bg-indigo-600 hover:text-white rounded-lg">
+            Previous
+          </a>
+          <a href="#"
+           class="inline-block bg-indigo-100 px-3 py-2 hover:bg-indigo-600 hover:text-white rounded-lg">
+            Next
+          </a>
+        </div>
+</MainLayout>

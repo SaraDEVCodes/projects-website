@@ -1,0 +1,34 @@
+---
+import { formatDate } from "../utils";
+import type { CollectionEntry } from "astro:content";
+import Tags from "./Tags.astro"; 
+
+const { project } = Astro.props;
+
+interface Props {
+    project : CollectionEntry<'project'>
+}
+---
+
+        <div class="max-w-md mx-auto mt-10">
+          <div class="bg-white rounded-lg overflow-hidden shadow-lg">
+            <a href={'/projects/' + project.slug}>
+              <img
+                src={'/images/' + project.data.image}
+                alt="Article Image"
+                class="w-full h-48 object-cover hover:opacity-75 transition duration-300 ease-in-out"
+              />
+            </a>
+            <div class="p-6">
+              <h2 class="text-2xl font-semibold mb-2">
+                <a href={'/projects/' + project.slug}>
+                  {project.data.title}</a
+                >
+              </h2>
+              <p class="text-gray-600 text-sm mb-4">{formatDate(project.data.pubDate)}</p>
+              
+              <Tags tags={project.data.tags}/>
+
+            </div>
+          </div>
+        </div>
