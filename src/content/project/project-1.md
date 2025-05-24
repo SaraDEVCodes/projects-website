@@ -3,7 +3,7 @@ title: 'project 1'
 pubDate: 2025-04-01
 author: 'Studio Grimoire'
 image: 'image2.png'
-tags: ['3D-Modelling']
+tags: ['3D Modelling']
 slug: project-1
 ---
 

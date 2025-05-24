@@ -1,11 +1,13 @@
 ---
+export const prerender = false;
+
 import MainLayout from "../../layouts/MainLayout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
 import SearchForm from "../../components/SearchForm.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
-const query: string | null = Astro.url.searchParams.get("query");
+const query = Astro.url.searchParams.get('query') || null;
 
 const allProjects: CollectionEntry<'project'>[] = await getCollection('project');
 
@@ -17,7 +19,8 @@ const searchResults = isValidQuery
       return (
         project.data.title.toLowerCase().includes(q) ||
         project.body.toLowerCase().includes(q) ||
-        project.slug.toLowerCase().includes(q)
+        project.slug.toLowerCase().includes(q) ||
+        project.data.tags.map(tag => tag.toLowerCase()).includes(q)
       );
     })
   : [];
