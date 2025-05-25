@@ -28,4 +28,11 @@ In the game you play as a Queen, but this queen has been tricked by her people a
 
 ## Game Demo Download page
 
-[Download Page (Windows download)](https://studio-grimoire.itch.io/daemonheim)
+<a href="https://studio-grimoire.itch.io/daemonheim" 
+   style="color:#ef4444; text-decoration:none; margin-bottom:1rem; display:inline-block;" 
+   onmouseover="this.style.textDecoration='underline'" 
+   onmouseout="this.style.textDecoration='none'" 
+   target="_blank" 
+   rel="noopener noreferrer">
+  Download Page (Windows download)
+</a>
