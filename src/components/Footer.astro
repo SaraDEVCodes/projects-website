@@ -4,17 +4,16 @@ import type { CollectionEntry } from "astro:content";
 import { captialise } from "../utils";
 
 const allProjects: CollectionEntry<'project'>[] = (await getCollection('project'))
-
 const tags: string[] = allProjects.flatMap((project: any) => project.data.tags);
-
 const uniqueTags: string[] = [...new Set(tags)];
 ---
 
-<footer class="bg-gray-900 text-white">
-  <div class="container mx-auto mt-10 max-w-screen-xl px-8">
+<footer class="bg-gray-900 text-white py-10">
+  <div class="container mx-auto max-w-screen-xl px-8">
     <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
-      
-      <div class="mt-10">
+
+      <!-- About -->
+      <div>
         <h3 class="text-xl font-semibold mb-4">About</h3>
         <div class="space-y-4">
           <p class="text-white text-sm">
@@ -26,28 +25,32 @@ const uniqueTags: string[] = [...new Set(tags)];
         </div>
       </div>
 
-      <div class="mt-10">
+      <!-- Project tags -->
+      <div>
         <h3 class="text-xl font-semibold mb-4">Project tags</h3>
         <ul class="text-white text-sm">
           {uniqueTags.map(tag => (
             <li class="mb-2">
-              <a href={'/projects/tag/' + tag}>{captialise(tag)}</a>
+              <a href={`/projects/tag/${tag}`} class="text-red-500 hover:underline">
+                {captialise(tag)}
+              </a>
             </li>
           ))}
         </ul>
       </div>
 
-      <div class="mt-10">
+      <!-- Contact -->
+      <div>
         <h3 class="text-xl font-semibold mb-4">Contact</h3>
         <ul class="text-white text-sm">
           <li class="mb-2">
-            <a href="#">Email</a>
+            <a href="mailto:sara.projects.contact@gmail.com" class="text-red-500 hover:underline">Email</a>
           </li>
           <li class="mb-2">
-            <a href="#">Linkedin</a>
+            <a href="https://www.linkedin.com/in/sara-ferreira-a111b7224/" target="_blank" rel="noopener noreferrer" class="text-red-500 hover:underline">Linkedin</a>
           </li>
           <li class="mb-2">
-            <a href="#">Youtube</a>
+            <a href="https://www.youtube.com/@StudioGrimoire" target="_blank" rel="noopener noreferrer" class="text-red-500 hover:underline">Youtube</a>
           </li>
         </ul>
       </div>
