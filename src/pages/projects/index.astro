@@ -8,11 +8,16 @@ import SearchForm from '../../components/SearchForm.astro';
 import Pagination from '../../components/Pagination.astro';
 import { PROJECTS_PER_PAGE } from '../../constants';
 
-const currentPage: number | null = +Astro.url.searchParams.get('page')! || 1;
+export const prerender = false;
+
+let currentPage = Number(Astro.url.searchParams.get('page') || 1);
+if (isNaN(currentPage) || currentPage < 1) currentPage = 1;
 
 const allProjects: CollectionEntry<'project'>[] = (await getCollection('project')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const totalPages: number = Math.ceil(allProjects.length / PROJECTS_PER_PAGE);
+
+const projectsForPage: CollectionEntry<'project'>[] = allProjects.slice((currentPage - 1) * PROJECTS_PER_PAGE, currentPage * PROJECTS_PER_PAGE);
 ---
 
 <MainLayout title = "Projects">
@@ -23,13 +28,17 @@ const totalPages: number = Math.ceil(allProjects.length / PROJECTS_PER_PAGE);
    <br>
 
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-       {allProjects.map(project => (
+       {projectsForPage.map(project => (
 
         <ProjectCard project={project} />
 
        ))}
       </div>
 
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <Pagination 
+        currentPage={currentPage} totalPages={totalPages} 
+        disablePrevious={currentPage ===1} 
+        disableNext={currentPage === totalPages}
+      />
 
 </MainLayout>
