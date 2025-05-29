@@ -15,8 +15,8 @@ const otherProjects: CollectionEntry<'project'>[] = allProjects.slice(1);
 ---
 
 <MainLayout>
-      <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 pb-10">
-        <div>
+      <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+         <div>
           <h1 class="text-3xl font-bold mt-4 mb-2 leading-tight xl:text-3xl">
             Welcome to the Studio Grimoire website!
           </h1>
@@ -32,11 +32,14 @@ const otherProjects: CollectionEntry<'project'>[] = allProjects.slice(1);
 
         </div>
 
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-       
-        {otherProjects.slice(0, HOMEPAGE_PROJECTS_LIMIT).map(project => (<ProjectCard project = {project} /> ))}
-
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-4 lg:mb-0">
+        {otherProjects
+          .slice(0, HOMEPAGE_PROJECTS_LIMIT)
+          .map(project => (
+            <ProjectCard project={project} />
+          ))}
       </div>
+
   </body>
 </html>
 </MainLayout>
