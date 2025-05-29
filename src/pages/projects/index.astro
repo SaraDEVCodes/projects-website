@@ -19,25 +19,24 @@ const totalPages: number = Math.ceil(allProjects.length / PROJECTS_PER_PAGE);
 const projectsForPage: CollectionEntry<'project'>[] = allProjects.slice((currentPage - 1) * PROJECTS_PER_PAGE, currentPage * PROJECTS_PER_PAGE);
 ---
 
-<MainLayout title = "Projects">
-	 <h1 class="text-2xl pb-3">All Projects</h1>
+<MainLayout title="Projects">
+  <div class="pb-10">
+    <h1 class="text-2xl pb-3">All Projects</h1>
 
-   <SearchForm />
+    <SearchForm />
+    <br />
 
-   <br>
-
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-       {projectsForPage.map(project => (
-
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {projectsForPage.map(project => (
         <ProjectCard project={project} />
+      ))}
+    </div>
 
-       ))}
-      </div>
-
-      <Pagination 
-        currentPage={currentPage} totalPages={totalPages} 
-        disablePrevious={currentPage ===1} 
-        disableNext={currentPage === totalPages}
-      />
-
+    <Pagination 
+      currentPage={currentPage} 
+      totalPages={totalPages} 
+      disablePrevious={currentPage === 1} 
+      disableNext={currentPage === totalPages}
+    />
+  </div>
 </MainLayout>
