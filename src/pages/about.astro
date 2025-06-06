@@ -7,42 +7,46 @@ import team2 from "../images/team2.png";
 import team3 from "../images/team3.png";
 ---
 
-<MainLayout title = "About">
-<div class="pb-16">
-<h1 class="text-4xl font-bold mb-5"> About Studio Grimoire</h1>
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+<MainLayout title="About">
+    <h1 class="text-4xl font-bold mb-5">About Studio Grimoire</h1>
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="w-full md:w-1/2 mb-8 md:mb-0">
-            <Image src={about} alt="Studio Grimoire Team" class="w-full h-auto rounded-lg shadow-lg"/>
+            <Image
+                src={about}
+                alt="Studio Grimoire Team"
+                class="w-full h-auto rounded-lg shadow-lg"
+            />
         </div>
         <div class="w-full md:w-1/2">
             <h2 class="text-3xl font-extrabold text-gray-900 mb-4">
                 Who We Are
             </h2>
             <p class="text-gray-700 leading-relaxed mb-6">
-                Studio Grimoire is a newly risen brand and a team of 1 dedicated to bringing you all things fantasy.
+                Studio Grimoire is a newly risen brand and a team of 1 dedicated
+                to bringing you all things fantasy.
             </p>
             <p class="text-gray-700 leading-relaxed mb-6">
-                Our mission is to bring out works inspired by your favourite fantasy games, art and music. Whether you're new to the fantasy genre, an enthusiast or just curious about our work, we've got you covered.
+                Our mission is to bring out works inspired by your favourite
+                fantasy games, art and music. Whether you're new to the fantasy
+                genre, an enthusiast or just curious about our work, we've got
+                you covered.
             </p>
-           
         </div>
     </div>
-    
+
     <!-- Team -->
     <div class="mt-10">
-      <h2 class="text-3xl font-extrabold text-gray-900 mb-8">
-        Our Team
-      </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-            <Image src={team1} alt="Team Member 1" class="w-full h-auto"/>
-            <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Sara Ferreira</h3>
-                <p class="text-gray-70">Founder</p>
+        <h2 class="text-3xl font-extrabold text-gray-900 mb-8">Our Team</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                <Image src={team1} alt="Team Member 1" class="w-full h-auto" />
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                        Sara Ferreira
+                    </h3>
+                    <p class="text-gray-70">Founder</p>
+                </div>
             </div>
         </div>
-        </div>
-      </div>
     </div>
- </div>
 </MainLayout>

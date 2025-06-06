@@ -20,7 +20,6 @@ const projectsForPage: CollectionEntry<'project'>[] = allProjects.slice((current
 ---
 
 <MainLayout title="Projects">
-  <div class="pb-10">
     <h1 class="text-2xl pb-3">All Projects</h1>
 
     <SearchForm />
@@ -38,5 +37,4 @@ const projectsForPage: CollectionEntry<'project'>[] = allProjects.slice((current
       disablePrevious={currentPage === 1} 
       disableNext={currentPage === totalPages}
     />
-  </div>
 </MainLayout>

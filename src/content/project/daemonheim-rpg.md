@@ -1,6 +1,6 @@
 ---
 title: 'Daemonheim'
-pubDate: 2025-05-22
+pubDate: 2025-05-22T23:59:59.000Z
 author: 'Studio Grimoire'
 image: 'image1.png'
 tags: ['Game', 'Dark fantasy']
@@ -20,7 +20,7 @@ slug: daemonheim-rpg
 
 ## Game Description
 
-Starting as a university final-year project, it slowly started to become of of the best works I’ve ever poured my time into.
+Starting as a university final-year project, it slowly started to become one of the best works I’ve ever poured my time into.
 
 This project has already reached further than all my previous game development projects and will most likely be the first to be published, possibly because it is another project that I’m deeply interested in and will pour my entire skillset into.
 
@@ -30,9 +30,9 @@ In the game you play as a Queen, but this queen has been tricked by her people a
 
 ## Game Unique Features
 
-- elden ring inspired world style, design and story
-- > NieR automata inspired fighting style and design
-- additional dark-souls inspired combat mechanic
-- > open world RPG
-- a sad yet captivating story
-- > a roller coaster of emotions gameplay
+* elden ring inspired world style, design and story
+* NieR automata inspired fighting style and design
+* additional dark-souls inspired combat mechanic
+* open world RPG
+* a sad yet captivating story
+* a roller coaster of emotions gameplay
