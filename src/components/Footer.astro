@@ -3,7 +3,8 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { captialise } from "../utils";
 
-const allProjects: CollectionEntry<'project'>[] = (await getCollection('project'))
+const allProjects: CollectionEntry<"project">[] =
+  await getCollection("project");
 const tags: string[] = allProjects.flatMap((project: any) => project.data.tags);
 const uniqueTags: string[] = [...new Set(tags)];
 ---
@@ -11,7 +12,6 @@ const uniqueTags: string[] = [...new Set(tags)];
 <footer class="bg-gray-900 text-white py-10 mt-10">
   <div class="container mx-auto max-w-screen-xl px-8">
     <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
-
       <!-- About -->
       <div>
         <h3 class="text-xl font-semibold mb-4">About</h3>
@@ -20,9 +20,9 @@ const uniqueTags: string[] = [...new Set(tags)];
             Studio Grimoire is a studio for fantasy genre enthusiasts.
           </p>
           <p class="text-white text-sm">
-            We publish games, art and music exploring the fantasy genre in many creative fields.
+            We publish games, art and music exploring the fantasy genre in many
+            creative fields.
           </p>
-          
         </div>
       </div>
 
@@ -30,13 +30,18 @@ const uniqueTags: string[] = [...new Set(tags)];
       <div>
         <h3 class="text-xl font-semibold mb-4">Project tags</h3>
         <ul class="text-white text-sm">
-          {uniqueTags.map(tag => (
-            <li class="mb-2">
-              <a href={`/projects/tag/${tag}`} class="text-red-500 hover:underline">
-                {captialise(tag)}
-              </a>
-            </li>
-          ))}
+          {
+            uniqueTags.map((tag) => (
+              <li class="mb-2">
+                <a
+                  href={`/projects/tag/${tag}`}
+                  class="text-red-500 hover:underline"
+                >
+                  {captialise(tag)}
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </div>
 
@@ -45,16 +50,34 @@ const uniqueTags: string[] = [...new Set(tags)];
         <h3 class="text-xl font-semibold mb-4">Contact</h3>
         <ul class="text-white text-sm">
           <li class="mb-2">
-            <a href="mailto:sara.projects.contact@gmail.com" class="text-red-500 hover:underline">Email</a>
+            <a
+              href="mailto:sara.projects.contact@gmail.com"
+              class="text-red-500 hover:underline">Email</a
+            >
           </li>
           <li class="mb-2">
-            <a href="https://www.linkedin.com/in/sara-ferreira-a111b7224/" target="_blank" rel="noopener noreferrer" class="text-red-500 hover:underline">Linkedin (Personal)</a>
+            <a
+              href="https://www.linkedin.com/in/sara-ferreira-a111b7224/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-red-500 hover:underline">Linkedin (Personal)</a
+            >
           </li>
           <li class="mb-2">
-            <a href="https://www.linkedin.com/company/studio-grimoire" target="_blank" rel="noopener noreferrer" class="text-red-500 hover:underline">Linkedin (Company)</a>
+            <a
+              href="https://www.linkedin.com/company/studio-grimoire"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-red-500 hover:underline">Linkedin (Company)</a
+            >
           </li>
           <li class="mb-2">
-            <a href="https://www.youtube.com/@StudioGrimoire" target="_blank" rel="noopener noreferrer" class="text-red-500 hover:underline">Youtube</a>
+            <a
+              href="https://www.youtube.com/@StudioGrimoire"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-red-500 hover:underline">Youtube</a
+            >
           </li>
         </ul>
       </div>
@@ -63,14 +86,13 @@ const uniqueTags: string[] = [...new Set(tags)];
       <div>
         <div class="space-y-4 text-x1l font-semibold">
           <p class="text-white text-sm">
-            Copyright &copy; 2025 Studio Grimoire. All rights reserved. 
-          </p>    
+            &copy; 2025 Studio Grimoire. All rights reserved.
+          </p>
           <p class="text-white text-sm">
             Designed & Developed with love with Astro and Tailwind CSS.
-          </p>      
+          </p>
         </div>
       </div>
-
     </div>
   </div>
 </footer>
