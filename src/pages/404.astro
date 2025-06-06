@@ -4,13 +4,18 @@ import { Image } from "astro:assets";
 import error from "../images/error-404.png";
 ---
 
-<MainLayout title = "Wrong page!">
+<MainLayout title="Wrong page!">
     <div class="flex flex-col items-center justify-tiems-center gap-7">
-        <Image src={error} alt="404" height={250} width={250} class="mt-10"/>
+        <Image src={error} alt="404" height={250} width={250} class="mt-10" />
         <h1 class="text-5xl">Page not found</h1>
-        <p class="text-2cl mb-10">
+        <p class="text-2cl mb-2">
             Tanya found you wondering where you're not supposed to be!
         </p>
-        <a href="/" class="inline-block bg-gray-100 p-2 mb-6 hover:bg-red-500 hover:text-white">Run away</a>
+        <p class="text-2cl mb-2">&copy; 2013 Carlo Zen</p>
+        <a
+            href="/"
+            class="inline-block bg-gray-100 p-2 mb-6 hover:bg-red-500 hover:text-white"
+            >Run away</a
+        >
     </div>
 </MainLayout>

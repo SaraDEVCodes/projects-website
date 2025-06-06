@@ -7,41 +7,54 @@ import SearchForm from "../../components/SearchForm.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
-const query = Astro.url.searchParams.get('query') || null;
+const query = Astro.url.searchParams.get("query") || null;
 
-const allProjects: CollectionEntry<'project'>[] = await getCollection('project');
+const allProjects: CollectionEntry<"project">[] =
+  await getCollection("project");
 
 const isValidQuery = query && query.trim() !== "";
 
 const searchResults = isValidQuery
-  ? allProjects.filter(project => {
+  ? allProjects.filter((project) => {
       const q = query!.toLowerCase();
       return (
         project.data.title.toLowerCase().includes(q) ||
         project.body.toLowerCase().includes(q) ||
         project.slug.toLowerCase().includes(q) ||
-        project.data.tags.map(tag => tag.toLowerCase()).includes(q)
+        project.data.tags.map((tag) => tag.toLowerCase()).includes(q)
       );
     })
   : [];
 ---
 
 <MainLayout title="Search Results">
-  <a href="/projects" class="inline-block bg-gray-100 p-2 mb-5 hover:bg-red-500 hover:text-white">All Projects</a>
+  <a
+    href="/projects"
+    class="inline-block bg-gray-100 text-gray-800 font-semibold py-2 px-4 mb-5 rounded-full hover:bg-red-500 hover:text-white transition duration-200"
+  >
+    All Projects
+  </a>
 
   <SearchForm />
 
   <h1 class="text-2xl pb-3 mt-6">
-    {isValidQuery ? <>Results For <strong>{query}</strong></> : 'No query provided'}
-    {isValidQuery && searchResults.length === 0 && (
-    <p class="text-gray-500">No matching projects found.</p>
-    )}
+    {
+      isValidQuery ? (
+        <>
+          Results For <strong>{query}</strong>
+        </>
+      ) : (
+        "No query provided"
+      )
+    }
+    {
+      isValidQuery && searchResults.length === 0 && (
+        <p class="text-gray-500">No matching projects found.</p>
+      )
+    }
   </h1>
 
-
   <div class="grid grid-colst-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {searchResults.map(project => (<ProjectCard project={project}/>
-    ))}
+    {searchResults.map((project) => <ProjectCard project={project} />)}
   </div>
 </MainLayout>
-

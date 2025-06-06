@@ -1,5 +1,5 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro"
+import MainLayout from "../../layouts/MainLayout.astro";
 export const prerender = false;
 import { getEntry } from "astro:content";
 import { formatDate } from "../../utils";
@@ -7,35 +7,46 @@ import Tags from "../../components/Tags.astro";
 
 const { slug } = Astro.params;
 
-if(slug === undefined){
-    throw new Error('Slug is required')
+if (slug === undefined) {
+    throw new Error("Slug is required");
 }
 
-const entry = await getEntry('project', slug);
+const entry = await getEntry("project", slug);
 
-if(entry === undefined){
-    return Astro.redirect('/404');
+if (entry === undefined) {
+    return Astro.redirect("/404");
 }
 
 const { Content } = await entry.render();
 ---
 
 <MainLayout>
-    
-    <a href="/projects" class="inline-block bg-gray-100 p-2 mb-6 hover:bg-indigo-500 hover:text-white">Back To All Projects</a>
-      <article>
-        <h1 class="text-4xl font-bold mb-2">{entry.data.title}</h1>
-        <h3 class="text-lg mb-2">{entry.data.author} Published {formatDate(entry.data.pubDate)}</h3>
-        
-            <Tags tags={entry.data.tags}/>
+    <div class="flex flex-col items-start">
+        <a
+            href="/projects"
+            class="bg-red-500 hover:bg-red-800 text-white font-semibold text-base uppercase tracking-wide py-2 px-4 mb-10 rounded-full shadow-md transition duration-200"
+        >
+            Back To All Projects
+        </a>
 
-        <img src={'/images/' + entry.data.image } alt="Article Image" class="w-full h-auto rounded-xl my-6" />
-        <div class="article-content">
-        <Content />
-        </div>
+        <article>
+            <h1 class="text-4xl font-bold mb-2">{entry.data.title}</h1>
+            <h3 class="text-lg mb-2">
+                {entry.data.author} Published {formatDate(entry.data.pubDate)}
+            </h3>
 
-      </article>
+            <Tags tags={entry.data.tags} />
 
+            <img
+                src={"/images/" + entry.data.image}
+                alt="Article Image"
+                class="w-full h-auto rounded-xl my-6"
+            />
+            <div class="article-content">
+                <Content />
+            </div>
+        </article>
+    </div>
 </MainLayout>
 
 <style is:global>
