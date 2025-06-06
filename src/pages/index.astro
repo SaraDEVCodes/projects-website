@@ -5,41 +5,63 @@ import { HOMEPAGE_PROJECTS_LIMIT } from "../constants";
 import MostRecentProjectCard from "../components/MostRecentProjectCard.astro";
 
 import { getCollection } from "astro:content";
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
 import ProjectCard from "../components/ProjectCard.astro";
 
-const allProjects: CollectionEntry<'project'>[] = (await getCollection('project')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const allProjects: CollectionEntry<"project">[] = (
+  await getCollection("project")
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-const mostRecentProject: CollectionEntry<'project'> = allProjects[0];
-const otherProjects: CollectionEntry<'project'>[] = allProjects.slice(1); 
+const mostRecentProject: CollectionEntry<"project"> = allProjects[0];
+const otherProjects: CollectionEntry<"project">[] = allProjects.slice(1);
 ---
 
 <MainLayout>
-      <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
-         <div>
-          <h1 class="text-3xl font-bold mt-4 mb-2 leading-tight xl:text-3xl">
-            Welcome to the Studio Grimoire website!
-          </h1>
-          <p class="text-xl font-bold mt-0 mb-10 leading-tight xl:text-xl text-gray-500">
-            Inspired by your favorite fantasy games and music!
-          </p>
+  <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
+    <div>
+      <h1 class="text-3xl font-bold mt-4 mb-2 leading-tight xl:text-3xl">
+        Welcome to the Studio Grimoire website!
+      </h1>
+      <p
+        class="text-xl font-bold mt-0 mb-10 leading-tight xl:text-xl text-gray-500"
+      >
+        Inspired by your favorite fantasy games and music!
+      </p>
 
-          <SearchForm />
-          
-        </div>
-       
-        <MostRecentProjectCard project={mostRecentProject}/>
+      <SearchForm />
 
-        </div>
-
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10 lg:mb-0">
-        {otherProjects
-          .slice(0, HOMEPAGE_PROJECTS_LIMIT)
-          .map(project => (
-            <ProjectCard project={project} />
-          ))}
+      <div class="pt-14 flex justify-center gap-8">
+        <a
+          href="/projects/tag/Art"
+          class="bg-red-500 hover:bg-red-800 text-white font-semibold text-base uppercase tracking-wide py-3 px-7 rounded-full shadow-md transition duration-200"
+        >
+          Art
+        </a>
+        <a
+          href="/projects/tag/Video"
+          class="bg-red-500 hover:bg-red-800 text-white font-semibold text-base uppercase tracking-wide py-3 px-7 rounded-full shadow-md transition duration-200"
+        >
+          Videos
+        </a>
+        <a
+          href="/projects/tag/Game"
+          class="bg-red-500 hover:bg-red-800 text-white font-semibold text-base uppercase tracking-wide py-3 px-7 rounded-full shadow-md transition duration-200"
+        >
+          Games
+        </a>
       </div>
+    </div>
 
-  </body>
-</html>
+    <MostRecentProjectCard project={mostRecentProject} />
+  </div>
+
+  <div
+    class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10 lg:mb-0"
+  >
+    {
+      otherProjects
+        .slice(0, HOMEPAGE_PROJECTS_LIMIT)
+        .map((project) => <ProjectCard project={project} />)
+    }
+  </div>
 </MainLayout>
