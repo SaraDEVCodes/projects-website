@@ -43,29 +43,104 @@ const { Content } = await entry.render();
                 class="w-full h-auto rounded-xl my-6"
             />
             <div class="article-content">
+                <div class="article-content">
+                    <div class="mt-10 mb-10 relative">
+                        <button
+                            type="button"
+                            class="absolute left-0 top-20 -translate-y-1/2 z-10 p-4 bg-white/80 hover:bg-white rounded-full shadow"
+                            onclick="document.getElementById('gallery').scrollBy({ left: -500, behavior: 'smooth' })"
+                        >
+                            ◀
+                        </button>
+
+                        <div
+                            id="gallery"
+                            class="overflow-x-auto scroll-smooth px-10"
+                            style="scrollbar-width: thin"
+                        >
+                            <div class="flex gap-1">
+                                {
+                                    entry.data.galleryImages.map((img) => (
+                                        <img
+                                            src={img}
+                                            alt="Gallery Image"
+                                            class="w-80 h-25 rounded shadow-md object-cover flex-shrink-0"
+                                            loading="lazy"
+                                        />
+                                    ))
+                                }
+                            </div>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="absolute right-0 top-20 -translate-y-1/2 z-10 p-4 bg-white/80 hover:bg-white rounded-full shadow"
+                            onclick="document.getElementById('gallery').scrollBy({ left: 500, behavior: 'smooth' })"
+                        >
+                            ▶
+                        </button>
+                    </div>
+                </div>
+
+                {
+                    entry.data.videos && (
+                        <section class="mt-10 mb-10">
+                            <div class="flex flex-wrap gap-4 justify-center max-w-[1400px] mx-auto">
+                                {entry.data.videos.map((video) => (
+                                    <video
+                                        controls
+                                        style={{
+                                            width: "576px",
+                                            height: "324px",
+                                            maxWidth: "100%",
+                                            maxHeight: "100%",
+                                            aspectRatio: "16/9",
+                                            backgroundColor: "#000",
+                                            borderRadius: "0.5rem",
+                                            overflow: "hidden",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            margin: "0 auto",
+                                            boxShadow:
+                                                "0 4px 6px rgba(0, 0, 0, 0.1)",
+                                            objectFit: "contain",
+                                        }}
+                                        class="rounded shadow-md mb-4 flex-shrink-0"
+                                    >
+                                        <source src={video} type="video/mp4" />
+                                        Your browser does not support the video
+                                        tag.
+                                    </video>
+                                ))}
+                            </div>
+                        </section>
+                    )
+                }
+
                 <Content />
             </div>
         </article>
     </div>
+
+    <style is:global>
+        p {
+            margin: 20px 0;
+        }
+
+        h2 {
+            margin: 20px 0;
+            font-size: 1.8rem;
+        }
+
+        .article-content {
+        }
+        .article-content ul {
+            list-style: disc;
+            padding-left: 40px;
+        }
+        .article-content ul li {
+            margin: 10px 0;
+        }
+    </style>
 </MainLayout>
-
-<style is:global>
-    p {
-        margin: 20px 0;
-    }
-
-    h2 {
-        margin: 20px 0;
-        font-size: 1.8rem;
-    }
-
-    .article-content {
-    }
-    .article-content ul {
-        list-style: disc;
-        padding-left: 40px;
-    }
-    .article-content ul li {
-        margin: 10px 0;
-    }
-</style>
