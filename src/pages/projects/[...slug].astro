@@ -108,12 +108,12 @@ const { Content } = await entry.render();
                     >
                         {
                             entry.data.videos.map((video) => (
-                                <div class="w-full md:w-[48%] max-w-[450px]">
+                                <div class="w-[50%] max-w-[450px]">
                                     <video
                                         controls
                                         controlslist="nodownload"
-                                        oncontextmenu="return false"
-                                        class="aspect-video bg-black rounded shadow-md mb-4 w-full"
+                                        style="max-width: 500px; width: 100%;"
+                                        class="aspect-video bg-black rounded shadow-md mb-4"
                                     >
                                         <source src={video} type="video/mp4" />
                                         Your browser does not support the video
