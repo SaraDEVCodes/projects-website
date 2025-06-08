@@ -35,7 +35,9 @@ const { Content } = await entry.render();
 </script>
 
 <MainLayout>
-    <div class="flex flex-col items-start">
+    <div
+        class="flex flex-col items-start px-4 sm:px-6 lg:px-20 max-w-screen-xl mx-auto"
+    >
         <a
             href="/projects"
             class="bg-red-500 hover:bg-red-800 text-white font-semibold text-base uppercase tracking-wide py-2 px-4 mb-10 rounded-full shadow-md transition duration-200"
@@ -43,9 +45,11 @@ const { Content } = await entry.render();
             Back To All Projects
         </a>
 
-        <article>
-            <h1 class="text-4xl font-bold mb-2">{entry.data.title}</h1>
-            <h3 class="text-lg mb-2">
+        <article class="w-full">
+            <h1 class="text-3xl sm:text-4xl font-bold mb-2">
+                {entry.data.title}
+            </h1>
+            <h3 class="text-base sm:text-lg mb-2">
                 {entry.data.author} Published {formatDate(entry.data.pubDate)}
             </h3>
 
@@ -73,13 +77,15 @@ const { Content } = await entry.render();
                         class="overflow-x-auto scroll-smooth"
                         style="scrollbar-width: thin"
                     >
-                        <div class="flex gap-1 lg:pl-[calc(50%-160px)] ml-2">
+                        <div
+                            class="flex gap-2 pl-2 sm:pl-4 lg:pl-[calc(50%-160px)]"
+                        >
                             {
                                 entry.data.galleryImages.map((img) => (
                                     <img
                                         src={img}
                                         alt="Gallery Image"
-                                        class="w-80 h-25 rounded shadow-md object-cover flex-shrink-0"
+                                        class="w-64 sm:w-72 md:w-80 h-25 rounded shadow-md object-cover flex-shrink-0"
                                         loading="lazy"
                                     />
                                 ))
@@ -140,6 +146,11 @@ const { Content } = await entry.render();
 
         .article-content ul li {
             margin: 10px 0;
+        }
+
+        /* Optional: Prevent horizontal scrolling on body */
+        body {
+            overflow-x: hidden;
         }
     </style>
 </MainLayout>
