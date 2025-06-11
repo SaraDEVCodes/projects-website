@@ -3,7 +3,7 @@ title: 'No More Nightmares'
 pubDate: 2021-10-07T23:59:59.000Z
 author: 'Studio Grimoire'
 image: 'image3.png'
-tags: ['Game', 'Pixel-Art', 'Top-Down', 'Horror', 'Puzzles']
+tags: ['Game', 'Pixel-Art', '2D', 'Top-Down', 'Horror']
 slug: NoMoreNightmares
 
 galleryImages:

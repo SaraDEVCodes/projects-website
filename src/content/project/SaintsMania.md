@@ -3,7 +3,7 @@ title: 'Saints Mania'
 pubDate: 2024-09-22T18:19:00.000Z
 author: 'Studio Grimoire'
 image: 'image4.png'
-tags: ['Game', 'Pixel-Art', '3D', 'Action', 'Mecha', 'RPG']
+tags: ['Game', 'Retro', '3D', 'Action', 'Mecha', 'RPG']
 slug: SaintsMania
 
 galleryImages:

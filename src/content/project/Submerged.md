@@ -3,7 +3,7 @@ title: 'Submerged'
 pubDate: 2021-07-07T23:59:59.000Z
 author: 'Studio Grimoire'
 image: 'image2.png'
-tags: ['Game', 'Pixel-Art', '2D-Platformer']
+tags: ['Game', 'Pixel-Art', '2D', 'Platformer']
 slug: Submerged
 
 galleryImages:
