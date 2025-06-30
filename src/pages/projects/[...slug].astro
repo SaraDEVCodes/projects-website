@@ -4,20 +4,27 @@ export const prerender = false;
 import { getEntry } from "astro:content";
 import { formatDate } from "../../utils";
 import Tags from "../../components/Tags.astro";
+import { marked } from "marked";
 
 const { slug } = Astro.params;
 
-if (slug === undefined) {
-    throw new Error("Slug is required");
-}
+if (!slug) throw new Error("Slug is required");
 
 const entry = await getEntry("project", slug);
 
-if (entry === undefined) {
+if (!entry) {
     return Astro.redirect("/404");
 }
 
 const { Content } = await entry.render();
+
+const hasUpdates = entry.data.hasUpdates === true;
+
+const url = new URL(Astro.request.url);
+const activeTab = url.searchParams.get("tab") || "overview";
+
+// Convert updates markdown string to HTML
+const updatesHTML = hasUpdates ? marked.parse(entry.data.updates) : "";
 ---
 
 <script>
@@ -125,7 +132,72 @@ const { Content } = await entry.render();
                     </div>
                 </section>
 
-                <Content />
+                <!-- === Tabs Navigation Section === -->
+                <nav class="mb-8 flex space-x-4 border-b-2 border-gray-300">
+                    <a
+                        href={`/projects/${slug}?tab=overview`}
+                        class={`pb-2 border-b-4 uppercase transition ${
+                            activeTab === "overview"
+                                ? "border-red-500 font-bold text-red-600"
+                                : "border-transparent text-gray-700 font-semibold hover:border-red-500"
+                        }`}
+                        aria-current={activeTab === "overview"
+                            ? "page"
+                            : undefined}
+                    >
+                        Overview
+                    </a>
+                    {
+                        hasUpdates && (
+                            <a
+                                href={`/projects/${slug}?tab=updates`}
+                                class={`pb-2 border-b-4 uppercase transition ${
+                                    activeTab === "updates"
+                                        ? "border-red-500 font-bold text-red-600"
+                                        : "border-transparent text-gray-700 font-semibold hover:border-red-500"
+                                }`}
+                                aria-current={
+                                    activeTab === "updates" ? "page" : undefined
+                                }
+                            >
+                                Updates
+                            </a>
+                        )
+                    }
+                </nav>
+
+                {
+                    activeTab === "overview" ? (
+                        <Content />
+                    ) : hasUpdates ? (
+                        <>
+                            <div set:html={updatesHTML} />
+
+                            {entry.data.updateVideos?.length > 0 && (
+                                <section class="update-videos mt-6 flex flex-wrap gap-6 justify-center max-w-screen-lg mx-auto">
+                                    {entry.data.updateVideos.map((video) => (
+                                        <video
+                                            controls
+                                            controlslist="nodownload"
+                                            style="max-width: 500px; width: 100%;"
+                                            class="aspect-video bg-black rounded shadow-md mb-4"
+                                            key={video}
+                                        >
+                                            <source
+                                                src={video}
+                                                type="video/mp4"
+                                            />
+                                            Your browser does not support the
+                                            video tag.
+                                        </video>
+                                    ))}
+                                </section>
+                            )}
+                        </>
+                    ) : (
+                        <p>No updates available.</p>
+                    )
+                }
             </div>
         </article>
     </div>

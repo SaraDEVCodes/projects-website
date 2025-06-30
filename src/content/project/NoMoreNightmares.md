@@ -13,7 +13,17 @@ galleryImages:
 videos:
   - '/videos/NoMoreNightmares/presentation.mp4'
   - '/videos/NoMoreNightmares/gameplay.mp4'
+
+hasUpdates: true
+
+updates: |
+  ## Updates
+
+  - **22-06-2025:** Started Development on the upgraded project
+
+description: Started development on new upgraded project!
 ---
+
 ## Description
 No More Nightmares is a pixel-art, top-down horror game and was developed around the same time as my very first project Submerged, so this would make it the 2nd game I ever developed.
 

@@ -16,7 +16,13 @@ galleryImages:
 videos:
   - '/videos/submerged/presentation.mp4'
   - '/videos/submerged/gameplay.mp4'
+
+hasUpdates: false
+
+updates: |
+  ## Updates
 ---
+
 ## Description
 
 Submerged is the first game I developed, It's a project that definetly brings back a lot of nostalgia and memories.

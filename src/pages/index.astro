@@ -17,6 +17,7 @@ const otherProjects: CollectionEntry<"project">[] = allProjects.slice(1);
 ---
 
 <MainLayout>
+  <!-- 1. Welcome + Search + Buttons + Most Recent Project -->
   <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
     <div>
       <h1 class="text-3xl font-bold mt-4 mb-2 leading-tight xl:text-3xl">
@@ -33,13 +34,13 @@ const otherProjects: CollectionEntry<"project">[] = allProjects.slice(1);
       <div class="pt-14 flex justify-center gap-8">
         <a
           href="/projects/tag/Art"
-          class="bg-red-500 hover:bg-red-800 text-white font-semibold text-base uppercase tracking-wide py-3 px-7 rounded-full shadow-md transition duration-200"
+          class="bg-red-300 hover:bg-red-800 text-white font-semibold text-base uppercase tracking-wide py-3 px-7 rounded-full shadow-md transition duration-200 pointer-events-none"
         >
           Art
         </a>
         <a
           href="/projects/tag/Video"
-          class="bg-red-500 hover:bg-red-800 text-white font-semibold text-base uppercase tracking-wide py-3 px-7 rounded-full shadow-md transition duration-200"
+          class="bg-red-300 hover:bg-red-800 text-white font-semibold text-base uppercase tracking-wide py-3 px-7 rounded-full shadow-md transition duration-200 pointer-events-none"
         >
           Videos
         </a>
@@ -51,17 +52,71 @@ const otherProjects: CollectionEntry<"project">[] = allProjects.slice(1);
         </a>
       </div>
     </div>
-
     <MostRecentProjectCard project={mostRecentProject} />
   </div>
 
-  <div
-    class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10 lg:mb-0"
-  >
+  <!-- 2. Recent Updates Section -->
+  <section class="mt-10 mb-10">
+    <h2 class="text-2xl font-bold mb-4">Recent Updates</h2>
+    <p class="text-gray-500 mb-5">The latest updates to my projects!</p>
     {
-      otherProjects
-        .slice(0, HOMEPAGE_PROJECTS_LIMIT)
-        .map((project) => <ProjectCard project={project} />)
+      allProjects.some((p) => p.data.hasUpdates) ? (
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {allProjects
+            .filter((p) => p.data.hasUpdates)
+            .slice(0, HOMEPAGE_PROJECTS_LIMIT) // optional limit
+            .map((project) => (
+              <div
+                key={project.slug}
+                class="border rounded-lg p-4 shadow hover:shadow-lg transition relative"
+              >
+                <h3 class="text-xl font-semibold mb-2">{project.data.title}</h3>
+                <p class="text-gray-600 mb-4">
+                  {project.data.description || "No description available."}
+                </p>
+
+                <a
+                  href={`/projects/${project.slug}`}
+                  class="text-red-600 font-semibold hover:underline"
+                >
+                  View Project
+                </a>
+
+                {/* Update badge */}
+                <span
+                  class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold uppercase px-2 py-1 rounded"
+                  aria-label="Project has updates"
+                >
+                  Updated!
+                </span>
+              </div>
+            ))}
+        </div>
+      ) : (
+        <p class="text-gray-500">Check back soon for news and updates!</p>
+      )
     }
-  </div>
+  </section>
+
+  <!-- 3. Projects Section -->
+  <section class="">
+    <h2 class="text-2xl font-bold mb-4">Projects</h2>
+    <p class="text-gray-500">My Projects starting from the most recent!</p>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        otherProjects
+          .slice(0, HOMEPAGE_PROJECTS_LIMIT)
+          .map((project) => <ProjectCard project={project} />)
+      }
+    </div>
+
+    <div class="flex justify-end mt-10">
+      <a
+        href="/projects"
+        class="bg-red-500 hover:bg-red-800 text-white font-semibold text-sm uppercase tracking-wide py-2 px-5 rounded-full shadow-md transition duration-200"
+      >
+        View All Projects
+      </a>
+    </div>
+  </section>
 </MainLayout>

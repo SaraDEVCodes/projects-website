@@ -16,10 +16,22 @@ galleryImages:
   - '/images/Daemonheim/7.png'
   - '/images/Daemonheim/8.png'
 
-
 videos:
   - '/videos/Daemonheim/gameplay1.mp4'
   - '/videos/Daemonheim/gameplay2.mp4'
+
+hasUpdates: true
+
+updates: |
+  ## Updates
+
+  - **23-06-2025:** Implimented new movement system and mechanic
+
+updateVideos:
+  - '/videos/Daemonheim/Update1.mp4'
+  - '/videos/Daemonheim/Update1.1.mp4'
+
+description: Updated movement system!
 ---
 
 ## Game Download Page
@@ -32,6 +44,8 @@ videos:
    rel="noopener noreferrer">
   Download Page (Windows download)
 </a>
+
+---
 
 ## Description
 

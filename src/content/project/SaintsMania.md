@@ -14,7 +14,13 @@ galleryImages:
 videos:
   - '/videos/SaintsMania/presentation1.mp4'
   - '/videos/SaintsMania/presentation2.mp4'
+  
+hasUpdates: false
+
+updates: |
+  ## Updates
 ---
+
 ## Description
 Saints Mania is another passion project born from the love of gundam and inspiration from a mecha game called Eschatos.
 
