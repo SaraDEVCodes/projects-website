@@ -25,8 +25,9 @@ hasUpdates: true
 updates: |
   ## Updates
 
-  - **23-06-2025:** Implimented new movement system and mechanic
-
+  - **23-06-2025:** Implimented new movement system and mechanic using Unity's new input system and a new blend tree system. using these new and improved systems, i was able to vastly upgrade the previous buggy mechanics.
+ 
+  ## Video Logs
 updateVideos:
   - '/videos/Daemonheim/Update1.mp4'
   - '/videos/Daemonheim/Update1.1.mp4'

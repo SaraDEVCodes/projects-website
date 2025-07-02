@@ -19,7 +19,12 @@ hasUpdates: true
 updates: |
   ## Updates
 
-  - **22-06-2025:** Started Development on the upgraded project
+  - **22-06-2025:** Started Development on the upgraded project, by creating a brand new project I have built a new inventory system that accepts Unity's new input system and functions similarly to games like Terraria!
+
+  ## Video Logs
+  
+updateVideos:
+  - '/videos/NoMoreNightmares/Update1.mp4'
 
 description: Started development on new upgraded project!
 ---
