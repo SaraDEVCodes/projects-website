@@ -13,7 +13,7 @@ if (!slug) throw new Error("Slug is required");
 const entry = await getEntry("project", slug);
 
 if (!entry) {
-    return Astro.redirect("/404");
+  return Astro.redirect("/404");
 }
 
 const { Content } = await entry.render();
@@ -23,225 +23,395 @@ const hasUpdates = entry.data.hasUpdates === true;
 const url = new URL(Astro.request.url);
 const activeTab = url.searchParams.get("tab") || "overview";
 
-// Convert updates markdown string to HTML
 const updatesHTML = hasUpdates ? marked.parse(entry.data.updates) : "";
 ---
 
-<script>
-    window.scrollGallery = function (direction) {
-        const gallery = document.getElementById("gallery");
-        if (!gallery) return;
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    const closeBtn = document.getElementById("closeModal");
+    const prevBtn = document.getElementById("modalPrev");
+    const nextBtn = document.getElementById("modalNext");
+
+    // Gallery elements
+    const gallery = document.getElementById("gallery");
+    const galleryPrev = document.getElementById("galleryPrev");
+    const galleryNext = document.getElementById("galleryNext");
+
+    // Get all gallery images and their sources
+    const galleryImages = Array.from(document.querySelectorAll(".gallery-image"));
+    const imageSources = galleryImages.map(img => img.dataset.img);
+
+    let currentIndex = -1;
+
+    function openModalAtIndex(index) {
+      if (index < 0) index = imageSources.length - 1; // Loop to last
+      if (index >= imageSources.length) index = 0;    // Loop to first
+      currentIndex = index;
+      modalImg.src = imageSources[currentIndex];
+      modal.classList.remove("hidden");
+    }
+
+    // Setup click on gallery images
+    galleryImages.forEach((img, idx) => {
+      img.addEventListener("click", () => {
+        openModalAtIndex(idx);
+      });
+    });
+
+    // Close modal
+    closeBtn.onclick = () => modal.classList.add("hidden");
+
+    // Click outside image closes modal
+    modal.onclick = (e) => {
+      if (e.target.id === "imageModal") {
+        modal.classList.add("hidden");
+      }
+    };
+
+    // Prev arrow click in modal
+    prevBtn.onclick = (e) => {
+      e.stopPropagation();
+      openModalAtIndex(currentIndex - 1);
+    };
+
+    // Next arrow click in modal
+    nextBtn.onclick = (e) => {
+      e.stopPropagation();
+      openModalAtIndex(currentIndex + 1);
+    };
+
+    // Optional: Keyboard navigation
+    document.addEventListener("keydown", (e) => {
+      if (modal.classList.contains("hidden")) return;
+
+      if (e.key === "ArrowLeft") {
+        openModalAtIndex(currentIndex - 1);
+      } else if (e.key === "ArrowRight") {
+        openModalAtIndex(currentIndex + 1);
+      } else if (e.key === "Escape") {
+        modal.classList.add("hidden");
+      }
+    });
+
+    // Gallery scroll buttons
+    if (gallery && galleryPrev && galleryNext) {
+      function getScrollAmount() {
         const width = gallery.offsetWidth;
         const isMobile = window.innerWidth <= 768;
-        const scrollAmount = isMobile ? width * 1 : width * 0.6;
+        return isMobile ? width * 1 : width * 0.6;
+      }
+
+      galleryPrev.addEventListener("click", () => {
         gallery.scrollBy({
-            left: direction * scrollAmount,
-            behavior: "smooth",
+          left: -getScrollAmount(),
+          behavior: "smooth",
         });
-    };
+      });
+
+      galleryNext.addEventListener("click", () => {
+        gallery.scrollBy({
+          left: getScrollAmount(),
+          behavior: "smooth",
+        });
+      });
+    }
+  });
 </script>
 
 <MainLayout>
-    <div
-        class="flex flex-col items-start px-4 sm:px-6 lg:px-20 max-w-screen-xl mx-auto"
+  <div
+    class="flex flex-col items-start px-4 sm:px-6 lg:px-20 max-w-screen-xl mx-auto"
+  >
+    <a
+      href="/projects"
+      class="bg-red-500 hover:bg-red-800 text-white font-semibold text-base uppercase tracking-wide py-2 px-4 mb-10 rounded-full shadow-md transition duration-200"
     >
-        <a
-            href="/projects"
-            class="bg-red-500 hover:bg-red-800 text-white font-semibold text-base uppercase tracking-wide py-2 px-4 mb-10 rounded-full shadow-md transition duration-200"
-        >
-            Back To All Projects
-        </a>
+      Back To All Projects
+    </a>
 
-        <article class="w-full">
-            <h1 class="text-3xl sm:text-4xl font-bold mb-2">
-                {entry.data.title}
-            </h1>
-            <h3 class="text-base sm:text-lg mb-2">
-                {entry.data.author} Published {formatDate(entry.data.pubDate)}
-            </h3>
+    <article class="w-full">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-2">{entry.data.title}</h1>
+      <h3 class="text-base sm:text-lg mb-2">
+        {entry.data.author} Published {formatDate(entry.data.pubDate)}
+      </h3>
 
-            <Tags tags={entry.data.tags} />
+      <Tags tags={entry.data.tags} />
 
-            <img
-                src={"/images/" + entry.data.image}
-                alt="Article Image"
-                class="w-full h-auto rounded-xl my-6"
-            />
+      <img
+        src={"/images/" + entry.data.image}
+        alt="Article Image"
+        class="w-full h-auto rounded-xl my-6"
+      />
 
+      <div class="article-content">
+        {activeTab === "overview" && (
+          <>
+            <!-- Gallery Section -->
             <div class="article-content">
-                {activeTab === "overview" && (
-    <>
-        <!-- Gallery Section -->
-        <div class="article-content">
-            <div class="mt-10 mb-10 px-6 relative overflow-visible">
+              <div class="mt-10 mb-10 px-6 relative overflow-visible">
                 {/* Left arrow */}
-                {entry.data.galleryImages.length > 3 && (
-                    <button
-                        type="button"
-                        class="hidden sm:block absolute -left-10 top-16 -translate-y-1/2 z-10 p-2 sm:p-4 bg-white/80 hover:bg-white rounded-full shadow"
-                        onclick="scrollGallery(-1)"
-                    >
-                        ◀
-                    </button>
+               {entry.data.galleryImages.length > 3 && (
+                <button
+                    id="galleryPrev"
+                    type="button"
+                    style="left: -1rem; top: 50%; transform: translateY(-50%)"
+                    class="sm:block absolute text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 z-20"
+                    aria-label="Previous images"
+                >
+                    ‹
+                </button>
                 )}
+
 
                 <div
-                    id="gallery"
-                    class={`scroll-smooth overflow-x-auto ${
-                        entry.data.galleryImages.length > 2
-                            ? ""
-                            : "overflow-x-hidden"
-                    }`}
-                    style="scrollbar-width: thin"
+                  id="gallery"
+                  class={`scroll-smooth overflow-x-auto ${
+                    entry.data.galleryImages.length > 2 ? "" : "overflow-x-hidden"
+                  }`}
+                  style="scrollbar-width: thick"
                 >
-                    <div
-                        class={`flex gap-2 ${
-                            entry.data.galleryImages.length <= 3
-                                ? "justify-center"
-                                : "pl-2 sm:pl-4 lg:pl-[calc(50%-160px)]"
-                        }`}
-                    >
-                        {entry.data.galleryImages.map((img) => (
-                            <img
-                                src={img}
-                                alt="Gallery Image"
-                                class="w-64 sm:w-72 md:w-80 h-25 rounded shadow-md object-cover flex-shrink-0"
-                                loading="lazy"
-                            />
-                        ))}
-                    </div>
-                </div>
-
-                {/* Right arrow */}
-                {entry.data.galleryImages.length > 3 && (
-                    <button
-                        type="button"
-                        class="hidden sm:block absolute -right-10 top-16 -translate-y-1/2 z-10 p-2 sm:p-4 bg-white/80 hover:bg-white rounded-full shadow"
-                        onclick="scrollGallery(1)"
-                    >
-                        ▶
-                    </button>
-                )}
-            </div>
-        </div>
-
-        <!-- Regular Videos Section -->
-        {entry.data.videos?.length > 0 && (
-            <section class="mt-10 mb-10">
-                <div class="flex flex-wrap justify-center gap-6 mx-auto max-w-screen-lg">
-                    {entry.data.videos.map((video) => (
-                        <div class="w-[50%] max-w-[450px]">
-                            <video
-                                controls
-                                controlslist="nodownload"
-                                style="max-width: 500px; width: 100%;"
-                                class="aspect-video bg-black rounded shadow-md mb-4"
-                            >
-                                <source src={video} type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
+                  <div
+                    class={`flex gap-1 ${
+                      entry.data.galleryImages.length <= 3
+                        ? "justify-center"
+                        : "pl-2 lg:pl-[calc(50%-160px)]"
+                    }`}
+                  >
+                    {entry.data.galleryImages.map((img) => (
+                      <img
+                        src={img}
+                        alt="Gallery Image"
+                        loading="lazy"
+                        data-img={img}
+                        class="gallery-image cursor-pointer w-64 sm:w-72 md:w-80 h-25 rounded shadow-md object-cover flex-shrink-0"
+                      />
                     ))}
+                  </div>
                 </div>
-            </section>
-        )}
-    </>
-)}
 
-
-            <!-- === Tabs Navigation Section === -->
-            <nav class="mb-8 flex space-x-4 border-b-2 border-gray-300">
-                <a
-                    href={`/projects/${slug}?tab=overview`}
-                    class={`pb-2 border-b-4 uppercase transition ${
-                        activeTab === "overview"
-                            ? "border-red-500 font-bold text-red-600"
-                            : "border-transparent text-gray-700 font-semibold hover:border-red-500"
-                    }`}
-                    aria-current={activeTab === "overview" ? "page" : undefined}
+                {entry.data.galleryImages.length > 3 && (
+                <button
+                    id="galleryNext"
+                    type="button"
+                    style="right: -1rem; top: 50%; transform: translateY(-50%)"
+                    class="sm:block absolute text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 z-20"
+                    aria-label="Next images"
                 >
-                    Overview
-                </a>
-                {
-                    hasUpdates && (
-                        <a
-                            href={`/projects/${slug}?tab=updates`}
-                            class={`pb-2 border-b-4 uppercase transition ${
-                                activeTab === "updates"
-                                    ? "border-red-500 font-bold text-red-600"
-                                    : "border-transparent text-gray-700 font-semibold hover:border-red-500"
-                            }`}
-                            aria-current={
-                                activeTab === "updates" ? "page" : undefined
-                            }
-                        >
-                            Updates
-                        </a>
-                    )
-                }
-            </nav>
+                    ›
+                </button>
+                )}
+              </div>
+            </div>
 
-            {
-                activeTab === "overview" ? (
-                    <Content />
-                ) : hasUpdates ? (
-                    <>
-                        <div set:html={updatesHTML} />
+            <div
+              id="imageModal"
+              class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden z-50 relative"
+            >
+              <button
+                id="closeModal"
+                class="absolute top-4 right-4 text-white text-3xl font-bold"
+              >
+                &times;
+              </button>
 
-                        {entry.data.updateVideos?.length > 0 && (
-                            <section
-                                class={`update-videos mt-6 flex flex-wrap gap-6 max-w-screen-lg mx-auto ${
-                                    entry.data.updateVideos.length === 1
-                                        ? "justify-start"
-                                        : "justify-center"
-                                }`}
-                            >
-                                {" "}
-                                {entry.data.updateVideos.map((video) => (
-                                    <video
-                                        controls
-                                        controlslist="nodownload"
-                                        style="max-width: 500px; width: 100%;"
-                                        class="aspect-video bg-black rounded shadow-md mb-4"
-                                        key={video}
-                                    >
-                                        <source src={video} type="video/mp4" />
-                                        Your browser does not support the video
-                                        tag.
-                                    </video>
-                                ))}
-                            </section>
-                        )}
-                    </>
-                ) : (
-                    <p>No updates available.</p>
-                )
-            }
-        </article>
-    </div>
+              {/* Prev arrow */}
+              
+              <button
+                id="modalPrev"
+                class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full p-2 hover:bg-opacity-75"
+                aria-label="Previous image"
+              >
+                ‹
+              </button>
+
+              {/* Next arrow */}
+            {entry.data.galleryImages.length > 1 && (
+              <button
+                id="modalNext"
+                class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full p-2 hover:bg-opacity-75"
+                aria-label="Next image"
+              >
+                ›
+              </button>
+
+              <img
+                id="modalImg"
+                src=""
+                alt="Enlarged Image"
+                class="max-w-[90vw] max-h-[90vh] rounded shadow-lg"
+              />
+              )}
+            </div>
+
+            {/* Regular Videos Section */}
+            {entry.data.videos?.length > 0 && (
+              <section class="mt-10 mb-10">
+                <div class="flex flex-wrap justify-center gap-6 mx-auto max-w-screen-lg">
+                  {entry.data.videos.map((video) => (
+                    <div class="w-[50%] max-w-[450px]">
+                      <video
+                        controls
+                        controlslist="nodownload"
+                        style="max-width: 500px; width: 100%;"
+                        class="aspect-video bg-black rounded shadow-md mb-4"
+                      >
+                        <source src={video} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+          </>
+        )}
+
+        {/* === Tabs Navigation Section === */}
+        <nav class="mb-8 flex space-x-4 border-b-2 border-gray-300">
+          <a
+            href={`/projects/${slug}?tab=overview`}
+            class={`pb-2 border-b-4 uppercase transition ${
+              activeTab === "overview"
+                ? "border-red-500 font-bold text-red-600"
+                : "border-transparent text-gray-700 font-semibold hover:border-red-500"
+            }`}
+            aria-current={activeTab === "overview" ? "page" : undefined}
+          >
+            Overview
+          </a>
+          {hasUpdates && (
+            <a
+              href={`/projects/${slug}?tab=updates`}
+              class={`pb-2 border-b-4 uppercase transition ${
+                activeTab === "updates"
+                  ? "border-red-500 font-bold text-red-600"
+                  : "border-transparent text-gray-700 font-semibold hover:border-red-500"
+              }`}
+              aria-current={activeTab === "updates" ? "page" : undefined}
+            >
+              Updates
+            </a>
+          )}
+        </nav>
+
+        {activeTab === "overview" ? (
+          <Content />
+        ) : hasUpdates ? (
+          <>
+            <div set:html={updatesHTML} />
+
+            {entry.data.updateVideos?.length > 0 && (
+              <section
+                class={`update-videos mt-6 flex flex-wrap gap-6 max-w-screen-lg mx-auto ${
+                  entry.data.updateVideos.length === 1
+                    ? "justify-start"
+                    : "justify-center"
+                }`}
+              >
+                {entry.data.updateVideos.map((video) => (
+                  <video
+                    controls
+                    controlslist="nodownload"
+                    style="max-width: 500px; width: 100%;"
+                    class="aspect-video bg-black rounded shadow-md mb-4"
+                  >
+                    <source src={video} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                ))}
+              </section>
+            )}
+          </>
+        ) : (
+          <p>No updates available.</p>
+        )}
+      </div>
+    </article>
+  </div>
 </MainLayout>
 
 <style is:global>
-    p {
-        margin: 20px 0;
-    }
+  p {
+    margin: 20px 0;
+  }
 
-    h2 {
-        margin: 20px 0;
-        font-size: 1.8rem;
-    }
+  h2 {
+    margin: 20px 0;
+    font-size: 1.8rem;
+  }
 
-    .article-content ul {
-        list-style: disc;
-        padding-left: 40px;
-    }
+  .article-content ul {
+    list-style: disc;
+    padding-left: 40px;
+  }
 
-    .article-content ul li {
-        margin: 10px 0;
-    }
+  .article-content ul li {
+    margin: 10px 0;
+  }
 
-    /* Optional: Prevent horizontal scrolling on body */
-    body {
-        overflow-x: hidden;
-    }
+  /* Optional: Prevent horizontal scrolling on body */
+  body {
+    overflow-x: hidden;
+  }
+
+  img.cursor-pointer {
+    cursor: pointer;
+  }
+
+  #imageModal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: visible;
+  }
+
+  #imageModal.hidden {
+    display: none;
+  }
+
+  #modalImg {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  }
+
+  #closeModal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2.5rem;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10000;
+  }
+
+  /* Modal and gallery arrow buttons styles */
+  #modalPrev,
+  #modalNext,
+  #galleryPrev,
+  #galleryNext {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
+  #modalPrev,
+  #galleryPrev {
+    left: 1rem;
+  }
+
+  #modalNext,
+  #galleryNext {
+    right: 1rem;
+  }
 </style>
