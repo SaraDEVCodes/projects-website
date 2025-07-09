@@ -11,8 +11,8 @@ galleryImages:
   - '/images/NoMoreNightmares/2.png'
 
 videos:
-  - '/videos/NoMoreNightmares/presentation.mp4'
-  - '/videos/NoMoreNightmares/gameplay.mp4'
+  - 'https://youtu.be/cd-6enPPqGA'
+  - 'https://youtu.be/A_-_9NvU_UE'
 
 hasUpdates: true
 
@@ -22,9 +22,10 @@ updates: |
   - **22-06-2025:** Started Development on the upgraded project, by creating a brand new project I have built a new inventory system that accepts Unity's new input system and functions similarly to games like Terraria!
 
   ## Video Logs
+
+  - Video is in the process of being uploaded!
   
 updateVideos:
-  - '/videos/NoMoreNightmares/Update1.mp4'
 
 description: Started development on new upgraded project!
 ---

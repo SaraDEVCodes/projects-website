@@ -14,8 +14,8 @@ galleryImages:
   - '/images/submerged/5.png'
 
 videos:
-  - '/videos/submerged/presentation.mp4'
-  - '/videos/submerged/gameplay.mp4'
+  - 'https://youtu.be/ezVatJCmMU4'
+  - 'https://youtu.be/ruDuO75AZq4'
 
 hasUpdates: false
 

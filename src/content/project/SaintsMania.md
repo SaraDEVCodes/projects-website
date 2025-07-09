@@ -12,8 +12,8 @@ galleryImages:
   - '/images/SaintsMania/3.png'
 
 videos:
-  - '/videos/SaintsMania/presentation1.mp4'
-  - '/videos/SaintsMania/presentation2.mp4'
+  - 'https://youtu.be/YseQYLNC22E'
+  - 'https://youtu.be/ztkkBF8LpJg'
   
 hasUpdates: false
 

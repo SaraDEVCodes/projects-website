@@ -246,25 +246,52 @@ const updatesHTML = hasUpdates ? marked.parse(entry.data.updates) : "";
             </div>
 
             {/* Regular Videos Section */}
-            {entry.data.videos?.length > 0 && (
-              <section class="mt-10 mb-10">
-                <div class="flex flex-wrap justify-center gap-6 mx-auto max-w-screen-lg">
-                  {entry.data.videos.map((video) => (
-                    <div class="w-[50%] max-w-[450px]">
-                      <video
-                        controls
-                        controlslist="nodownload"
-                        style="max-width: 500px; width: 100%;"
-                        class="aspect-video bg-black rounded shadow-md mb-4"
-                      >
-                        <source src={video} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
+                {entry.data.videos?.length > 0 && (
+                  <section class="mt-10 mb-10">
+                    <div class="flex flex-wrap justify-center gap-6 mx-auto max-w-screen-lg">
+                      {entry.data.videos.map((video) => {
+                        const isYouTube = video.includes("youtube.com") || video.includes("youtu.be");
+                        let videoId: string | null = null;
+
+                        if (isYouTube) {
+                          try {
+                            const url = new URL(video);
+                            videoId =
+                              url.hostname === "youtu.be"
+                                ? url.pathname.slice(1)
+                                : url.searchParams.get("v");
+                          } catch (e) {
+                            console.error("Invalid YouTube URL:", video);
+                          }
+                        }
+
+                        return (
+                          <div class="w-[50%] max-w-[450px]">
+                            {isYouTube && videoId ? (
+                              <iframe
+                                src={`https://www.youtube.com/embed/${videoId}`}
+                                class="aspect-video bg-black rounded shadow-md mb-4"
+                                style="max-width: 500px; width: 100%;"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                              />
+                            ) : (
+                              <video
+                                controls
+                                controlslist="nodownload"
+                                style="max-width: 500px; width: 100%;"
+                                class="aspect-video bg-black rounded shadow-md mb-4"
+                              >
+                                <source src={video} type="video/mp4" />
+                                Your browser does not support the video tag.
+                              </video>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
-                  ))}
-                </div>
-              </section>
-            )}
+                  </section>
+                )}
           </>
         )}
 
@@ -296,37 +323,68 @@ const updatesHTML = hasUpdates ? marked.parse(entry.data.updates) : "";
           )}
         </nav>
 
-        {activeTab === "overview" ? (
-          <Content />
-        ) : hasUpdates ? (
-          <>
-            <div set:html={updatesHTML} />
+        {/* Updates Section */}
+            {activeTab === "overview" ? (
+              <Content />
+            ) : hasUpdates ? (
+              <>
+                <div set:html={updatesHTML} />
 
-            {entry.data.updateVideos?.length > 0 && (
-              <section
-                class={`update-videos mt-6 flex flex-wrap gap-6 max-w-screen-lg mx-auto ${
-                  entry.data.updateVideos.length === 1
-                    ? "justify-start"
-                    : "justify-center"
-                }`}
-              >
-                {entry.data.updateVideos.map((video) => (
-                  <video
-                    controls
-                    controlslist="nodownload"
-                    style="max-width: 500px; width: 100%;"
-                    class="aspect-video bg-black rounded shadow-md mb-4"
+                {entry.data.updateVideos?.length > 0 && (
+                  <section
+                    class={`update-videos mt-6 flex flex-wrap gap-6 max-w-screen-lg mx-auto ${
+                      entry.data.updateVideos.length === 1
+                        ? "justify-start"
+                        : "justify-center"
+                    }`}
                   >
-                    <source src={video} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                ))}
-              </section>
+                    {entry.data.updateVideos.map((video) => {
+                      const isYouTube = video.includes("youtube.com") || video.includes("youtu.be");
+                      let videoId: string | null = null;
+
+                      if (isYouTube) {
+                        try {
+                          const url = new URL(video);
+                          videoId =
+                            url.hostname === "youtu.be"
+                              ? url.pathname.slice(1)
+                              : url.searchParams.get("v");
+                        } catch (e) {
+                          console.error("Invalid YouTube URL:", video);
+                        }
+                      }
+
+                      return (
+                        <div class="w-[50%] max-w-[450px]">
+                          {isYouTube && videoId ? (
+                            <iframe
+                              src={`https://www.youtube.com/embed/${videoId}`}
+                              class="aspect-video bg-black rounded shadow-md mb-4"
+                              style="max-width: 500px; width: 100%;"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowfullscreen
+                            />
+                          ) : (
+                            <video
+                              controls
+                              controlslist="nodownload"
+                              style="max-width: 500px; width: 100%;"
+                              class="aspect-video bg-black rounded shadow-md mb-4"
+                            >
+                              <source src={video} type="video/mp4" />
+                              Your browser does not support the video tag.
+                            </video>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </section>
+                )}
+              </>
+            ) : (
+              <p>No updates available.</p>
             )}
-          </>
-        ) : (
-          <p>No updates available.</p>
-        )}
+
       </div>
     </article>
   </div>
@@ -351,7 +409,6 @@ const updatesHTML = hasUpdates ? marked.parse(entry.data.updates) : "";
     margin: 10px 0;
   }
 
-  /* Optional: Prevent horizontal scrolling on body */
   body {
     overflow-x: hidden;
   }

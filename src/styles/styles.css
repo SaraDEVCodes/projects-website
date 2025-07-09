@@ -1,0 +1,28 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    background: black;
+}
+
+.section1,
+.section2 {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+.section2 {
+    background: red;
+}
+
+.text {
+    top: 30%;
+    left: 50%;
+    position: absolute;
+    font-family: 'Franklin Gothic Heavy';
+    font-size: 15vw;
+    color: white;
+    text-shadow: 2px 2px 5px black, 5px 5px 70px gray;
+    transform: scale(1, 1.1) translate(-50%, 10%);
+}

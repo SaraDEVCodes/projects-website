@@ -17,8 +17,8 @@ galleryImages:
   - '/images/Daemonheim/8.png'
 
 videos:
-  - '/videos/Daemonheim/gameplay1.mp4'
-  - '/videos/Daemonheim/gameplay2.mp4'
+  - 'https://youtu.be/haIAbU4zEhI'
+  - 'https://youtu.be/kL2_lJidtHM'
 
 hasUpdates: true
 
@@ -29,8 +29,8 @@ updates: |
  
   ## Video Logs
 updateVideos:
-  - '/videos/Daemonheim/Update1.mp4'
-  - '/videos/Daemonheim/Update1.1.mp4'
+  - 'https://youtu.be/qzkDxjPaPYY'
+  - 'https://youtu.be/jVfANkpZX_s'
 
 description: Updated movement system!
 ---
