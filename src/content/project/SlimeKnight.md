@@ -18,7 +18,7 @@ hasUpdates: false
 
 ## Game Download Page
 
-<a href="https://studio-grimoire.itch.io/slime-knightm" 
+<a href="https://studio-grimoire.itch.io/slime-knight" 
    style="color:#ef4444; text-decoration:none; margin-bottom:1rem; display:inline-block;" 
    onmouseover="this.style.textDecoration='underline'" 
    onmouseout="this.style.textDecoration='none'" 
