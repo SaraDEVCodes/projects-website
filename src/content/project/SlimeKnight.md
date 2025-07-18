@@ -3,7 +3,7 @@ title: 'Slime Knight'
 pubDate: 2025-07-18T13:20:00.000Z
 author: 'Studio Grimoire'
 image: 'image5.png'
-tags: ['Game', 'Fantasy', '2D', 'Pixel-Art']
+tags: ['Game', 'Fantasy', '2D', 'Pixel-Art', 'Platformer']
 slug: SlimeKnight
 
 galleryImages:
