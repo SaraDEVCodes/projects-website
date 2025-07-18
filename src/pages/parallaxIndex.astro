@@ -1,91 +1,61 @@
-<head>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" type="text/css" href="styles.css" />
-</head>
-<body>
-  <div class="section1">
-    <div class="text1">PARALLAX</div>
-  </div>
-  <div class="section2">
-    <div class="text2">NORMAL</div>
-  </div>
-</body>
-<style>
-  html {
-    height: 100vh;
-    overflow: hidden;
-  }
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Parallax Background</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <style>
+      html {
+        height: 100vh;
+        overflow: hidden;
+      }
 
-  body {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    background: black;
-    perspective: 1px;
-    transform-style: preserve-3d;
-    overflow-x: hidden;
-    overflow-y: scroll;
-  }
+      body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        background: white;
+        perspective: 1px;
+        transform-style: preserve-3d;
+        overflow-x: hidden;
+        overflow-y: scroll;
+      }
 
-  .section1::before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background: url("../images/image7.png") top center;
-    background-size: cover;
-    transform: translateZ(-1px) scale(2.2);
-    filter: blur(2px);
-  }
+      .section1,
+      .section2 {
+        width: 100%;
+        min-height: 100vh;
+        position: relative;
+        transform-style: preserve-3d;
+      }
 
-  .section1 .text {
-    top: 10&;
-    transform: translateZ(-0.5px) scale(1.5, 1.6) translate(-33%, 10%);
-  }
+      .section1::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: url("../images/Paralaxx full.png") top center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
 
-  .section1::after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background: url("../images/image0.png") top center;
-    background-size: cover;
-  }
+      /* Responsive: use phone background on small screens */
+      @media (max-width: 980px) {
+        .section1::before {
+          background: url("../images/Paralaxx full phone.png") top center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+      }
 
-  .section1,
-  .section2 {
-    width: 100%;
-    min-height: 100vh;
-    position: relative;
-    transform-style: preserve-3d;
-  }
+      .section2 {
+        background: black;
+      }
+    </style>
+  </head>
 
-  .section2 {
-    background: white;
-  }
-
-  .text1 {
-    top: 30%;
-    left: 50%;
-    position: absolute;
-    font-family: "Franklin Gothic Heavy";
-    font-size: 15vw;
-    color: white;
-    text-shadow:
-      2px 2px 5px white,
-      5px 5px 70px gray;
-    transform: scale(1, 1.1) translate(-50%, 10%);
-  }
-  .text2 {
-    top: 30%;
-    left: 50%;
-    position: absolute;
-    font-family: "Franklin Gothic Heavy";
-    font-size: 15vw;
-    color: black;
-    text-shadow:
-      2px 2px 5px black,
-      5px 5px 70px gray;
-    transform: scale(1, 1.1) translate(-50%, 10%);
-  }
-</style>
+  <body>
+    <div class="section1"></div>
+    <div class="section2"></div>
+  </body>
+</html>
